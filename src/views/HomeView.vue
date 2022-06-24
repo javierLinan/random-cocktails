@@ -1,27 +1,14 @@
 <script setup lang="ts">
 import { onBeforeMount, ref, type Ref } from "vue";
 import { RouterLink } from "vue-router";
+import { DrinksResource } from "../api/DrinkResource";
+import type { DrinkDto } from "../dtos/DrinkDto";
 
-type Recipe = {
-  idDrink: string;
-  strDrink: string;
-};
-
-const API_URL = "https://www.thecocktaildb.com/api/json/v1/1";
-const drinks: Ref<Recipe[]> = ref([]);
+const drinks: Ref<DrinkDto[]> = ref([]);
 
 onBeforeMount(async () => {
-  drinks.value = await Promise.all([
-    loadRandomDrink(),
-    loadRandomDrink(),
-    loadRandomDrink(),
-  ]);
+  drinks.value = await DrinksResource.Instance.getThreeRandomDrinks();
 });
-
-async function loadRandomDrink(): Promise<Recipe> {
-  const url = `${API_URL}/random.php`;
-  return (await (await fetch(url)).json()).drinks[0];
-}
 </script>
 
 <template>

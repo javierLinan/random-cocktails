@@ -2,7 +2,6 @@ import { handleSingleDrinkResponse } from "./helpers/handleSingleDrinkResponse";
 import { throwErrorIfFails } from "./helpers/throwErrorIfFails";
 
 const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT as string;
-const CONTENT_TYPE = import.meta.env.VITE_CONTENT_TYPE;
 
 export class DrinksResource {
   apiEndpoint: string;
@@ -10,15 +9,12 @@ export class DrinksResource {
   static _instance: DrinksResource;
 
   private constructor() {
-    const headers = new Headers();
-    headers.append("Content-Type", `${CONTENT_TYPE}`);
-
     this.apiEndpoint = API_ENDPOINT;
   }
 
   public async getRandomDrink() {
     const url = `${this.apiEndpoint}/random.php`;
-    const response = await fetch(url);
+    const response = await this.fetch(url);
     await throwErrorIfFails(response);
     return handleSingleDrinkResponse(response);
   }
@@ -29,6 +25,11 @@ export class DrinksResource {
       this.getRandomDrink(),
       this.getRandomDrink(),
     ]);
+  }
+
+  // Isolated to help with testing
+  public async fetch(url: string) {
+    return fetch(url);
   }
 
   public static get Instance(): DrinksResource {

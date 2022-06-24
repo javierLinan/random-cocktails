@@ -8,16 +8,16 @@ export async function throwErrorIfFails(response: Response) {
     const errorText = await response.text();
 
     if (response.status === 500) {
-      throw new InternalServerError();
+      throw new InternalServerError(errorText);
     }
     if (response.status === 503) {
-      throw new ServiceUnavailableError();
+      throw new ServiceUnavailableError(errorText);
     }
     if (response.status === 401) {
-      throw new UnauthorizedError();
+      throw new UnauthorizedError(errorText);
     }
     if (response.status === 403) {
-      throw new ForbiddenError();
+      throw new ForbiddenError(errorText);
     }
 
     throw new Error(errorText);

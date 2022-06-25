@@ -1,5 +1,7 @@
 import { handleSingleDrinkResponse } from "./helpers/handleSingleDrinkResponse";
 import { throwErrorIfFails } from "./helpers/throwErrorIfFails";
+import { DrinkMapper } from "../mappers/DrinkMapper";
+import type { DrinkDto } from "../dtos/DrinkDto";
 
 const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT as string;
 
@@ -20,11 +22,13 @@ export class DrinksResource {
   }
 
   public async getThreeRandomDrinks() {
-    return Promise.all([
+    const drinkDtos = (await Promise.all([
       this.getRandomDrink(),
       this.getRandomDrink(),
       this.getRandomDrink(),
-    ]);
+    ])) as DrinkDto[];
+
+    return drinkDtos.map((drinkDto) => DrinkMapper.toDrink(drinkDto));
   }
 
   // Isolated to help with testing

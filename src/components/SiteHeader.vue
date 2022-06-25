@@ -29,12 +29,17 @@ function onScroll() {
       height="60"
     />
     <h1>Random cocktails</h1>
+    <div class="padded-h pushed-right">
+      <button icon="pushed-right" @click="$emit('refresh')">
+        Refresh cocktails
+      </button>
+    </div>
   </header>
 </template>
 
 <style>
 .site-header {
-  --padding: var(--s0);
+  --padding: var(--s-2);
   --spaced: var(--s0);
   display: flex;
   align-items: center;

@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { onBeforeMount, ref, type Ref } from "vue";
 import { DrinksResource } from "../api/DrinkResource";
-import type { DrinkDto } from "../dtos/DrinkDto";
 import SiteHeader from "../components/SiteHeader.vue";
 import GridLayout from "../components/GridLayout.vue";
 import DrinkCard from "../components/DrinkCard.vue";
+import type { Drink } from "../models/Drink";
 
-const drinks: Ref<DrinkDto[]> = ref([]);
+const drinks: Ref<Drink[]> = ref([]);
 
 onBeforeMount(async () => {
   await fetchRandomDrinks();
 });
 
 async function fetchRandomDrinks() {
-  drinks.value =
-    (await DrinksResource.Instance.getThreeRandomDrinks()) as DrinkDto[];
+  drinks.value = await DrinksResource.Instance.getThreeRandomDrinks();
 }
 </script>
 
@@ -22,7 +21,7 @@ async function fetchRandomDrinks() {
   <SiteHeader @refresh="fetchRandomDrinks()" />
   <main class="screen static" tabindex="-1">
     <GridLayout>
-      <DrinkCard v-for="drink in drinks" :key="drink.idDrink" :drink="drink" />
+      <DrinkCard v-for="drink in drinks" :key="drink.id" :drink="drink" />
     </GridLayout>
   </main>
 </template>

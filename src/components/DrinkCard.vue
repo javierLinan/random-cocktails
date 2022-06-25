@@ -1,35 +1,37 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
 import StackLayout from "./StackLayout.vue";
-import type { DrinkDto } from "../dtos/DrinkDto";
+import type { Drink } from "../models/Drink";
 import TagItem from "./TagItem.vue";
 import CardItem from "./CardItem.vue";
 
+function toKey(label: string) {
+  return label.replace(" ", "-");
+}
+
 defineProps<{
-  drink: DrinkDto;
+  drink: Drink;
 }>();
 </script>
 
 <template>
   <article class="drink-card">
     <StackLayout>
-      <h3 class="text-center one-line-clamp">{{ drink.strDrink }}</h3>
+      <h3 class="text-center one-line-clamp">{{ drink.name }}</h3>
       <CardItem>
         <template v-slot:image>
-          <img :src="drink.strDrinkThumb" />
+          <img :src="drink.thumbnail" />
         </template>
 
-        <StackLayout>
-          <div v-if="!!drink.strIngredient1">
-            <TagItem>{{ drink.strIngredient1 }}</TagItem>
+        <StackLayout class="drink-card__ingredients">
+          <div
+            v-for="ingredient in drink.ingredients.slice(0, 3)"
+            :key="`drink-card-ingredient-${toKey(ingredient)}`"
+          >
+            <TagItem>{{ ingredient }}</TagItem>
           </div>
-          <div v-if="!!drink.strIngredient2">
-            <TagItem>{{ drink.strIngredient2 }}</TagItem>
-          </div>
-          <div v-if="!!drink.strIngredient3">
-            <TagItem>{{ drink.strIngredient3 }}</TagItem>
-          </div>
-          <div v-if="!!drink.strIngredient4">
+
+          <div v-if="drink.ingredients.length > 3">
             <TagItem>...</TagItem>
           </div>
         </StackLayout>
@@ -38,4 +40,8 @@ defineProps<{
   </article>
 </template>
 
-<style></style>
+<style>
+.drink-card__ingredients {
+  --stack-gap: var(--s-1);
+}
+</style>

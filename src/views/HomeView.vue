@@ -9,13 +9,17 @@ import DrinkCard from "../components/DrinkCard.vue";
 const drinks: Ref<DrinkDto[]> = ref([]);
 
 onBeforeMount(async () => {
+  await fetchRandomDrinks();
+});
+
+async function fetchRandomDrinks() {
   drinks.value =
     (await DrinksResource.Instance.getThreeRandomDrinks()) as DrinkDto[];
-});
+}
 </script>
 
 <template>
-  <SiteHeader />
+  <SiteHeader @refresh="fetchRandomDrinks()" />
   <main class="screen static" tabindex="-1">
     <GridLayout>
       <DrinkCard v-for="drink in drinks" :key="drink.idDrink" :drink="drink" />

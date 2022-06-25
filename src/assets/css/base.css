@@ -77,13 +77,6 @@ body {
   text-rendering: optimizeSpeed;
 }
 
-a:focus,
-button:focus,
-input:focus {
-  outline: 1px solid;
-  outline-offset: 0.25em;
-}
-
 p {
   text-align: left;
 }
@@ -154,9 +147,17 @@ input {
 button {
   background-color: #fff;
   border: 0.125rem solid #fff;
+  outline: 0.125rem solid #fff;
   color: #000;
   font-family: Asap, sans-serif;
   padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s linear;
+}
+
+button:hover {
+  border-color: #000;
 }
 
 [type="submit"]:focus {
@@ -209,6 +210,11 @@ button {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+}
+
+.pushed-right {
+  margin-left: auto;
+  margin-right: 0;
 }
 
 [class*="static"] {

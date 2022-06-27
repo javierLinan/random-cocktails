@@ -1,8 +1,8 @@
 <template>
-  <div class="card-item">
-    <div class="card-item__image">
+  <div class="card-layout">
+    <div class="card-layout__image">
       <slot name="image"></slot>
-      <div class="card-item__overlapped-content">
+      <div class="card-layout__overlapped-content">
         <slot></slot>
       </div>
     </div>
@@ -10,24 +10,24 @@
 </template>
 
 <style>
-.card-item__image {
+.card-layout__image {
   position: relative;
   overflow: hidden;
-  border-radius: 0.6em;
+  border-radius: var(--r2);
 }
 
-.card-item__image img {
+.card-layout__image img {
   transition-duration: 150ms;
-  border-radius: 0.6em;
+  border-radius: var(--r2);
 }
-.card-item__image img:hover {
+.card-layout__image img:hover {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   transition-property: transform;
   transition-duration: 150ms;
   transform: scale(1.1);
 }
 
-.card-item__overlapped-content {
+.card-layout__overlapped-content {
   position: absolute;
   bottom: 0;
   padding: var(--s0);

@@ -12,7 +12,7 @@
   padding-top: var(--s-5);
   padding-bottom: var(--s-5);
   display: inline;
-  border-radius: 0.6em;
+  border-radius: var(--r2);
   font-size: var(--s-1);
 }
 </style>

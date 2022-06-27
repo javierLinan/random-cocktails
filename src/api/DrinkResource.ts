@@ -14,20 +14,20 @@ export class DrinksResource {
     this.apiEndpoint = API_ENDPOINT;
   }
 
-  public async getRandomDrink() {
-    const url = `${this.apiEndpoint}/random.php`;
+  public async getDrinkById(id: string) {
+    const url = `${this.apiEndpoint}/lookup.php?i=${id}`;
     const response = await this.fetch(url);
     await throwErrorIfFails(response);
     const drinkDto = (await handleSingleDrinkResponse(response)) as DrinkDto;
     return this.mapDrink(drinkDto);
   }
 
-  public async getThreeRandomDrinks() {
-    return Promise.all([
-      this.getRandomDrink(),
-      this.getRandomDrink(),
-      this.getRandomDrink(),
-    ]);
+  public async getRandomDrink() {
+    const url = `${this.apiEndpoint}/random.php`;
+    const response = await this.fetch(url);
+    await throwErrorIfFails(response);
+    const drinkDto = (await handleSingleDrinkResponse(response)) as DrinkDto;
+    return this.mapDrink(drinkDto);
   }
 
   // Isolated to help with testing

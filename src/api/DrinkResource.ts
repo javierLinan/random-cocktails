@@ -18,22 +18,26 @@ export class DrinksResource {
     const url = `${this.apiEndpoint}/random.php`;
     const response = await this.fetch(url);
     await throwErrorIfFails(response);
-    return handleSingleDrinkResponse(response);
+    const drinkDto = (await handleSingleDrinkResponse(response)) as DrinkDto;
+    return this.mapDrink(drinkDto);
   }
 
   public async getThreeRandomDrinks() {
-    const drinkDtos = (await Promise.all([
+    return Promise.all([
       this.getRandomDrink(),
       this.getRandomDrink(),
       this.getRandomDrink(),
-    ])) as DrinkDto[];
-
-    return drinkDtos.map((drinkDto) => DrinkMapper.toDrink(drinkDto));
+    ]);
   }
 
   // Isolated to help with testing
   public async fetch(url: string) {
     return fetch(url);
+  }
+
+  // Isolated to help with testing
+  public async mapDrink(drinkDto: DrinkDto) {
+    return DrinkMapper.toDrink(drinkDto);
   }
 
   public static get Instance(): DrinksResource {

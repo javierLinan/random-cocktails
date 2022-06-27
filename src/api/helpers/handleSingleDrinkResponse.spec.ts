@@ -1,14 +1,21 @@
-import { assert, describe, it } from "vitest";
+import { assert, beforeEach, describe, it } from "vitest";
 import { MockedResponse } from "../../mocks/Response.mock";
 import { handleSingleDrinkResponse } from "./handleSingleDrinkResponse";
 import type { ApiResponseDto } from "../../dtos/ApiResponseDto";
 import type { DrinkDto } from "../../dtos/DrinkDto";
-import { mockDrink } from "../../mocks/Drink.mock";
 
 describe("handleSingleDrinkResponse", () => {
+  let drinkDto: DrinkDto;
+  let anotherDrinkDto: DrinkDto;
+
+  beforeEach(() => {
+    drinkDto = { idDrink: "a drink" } as DrinkDto;
+    anotherDrinkDto = { idDrink: "another drink" } as DrinkDto;
+  });
+
   it("should return expected drink", async () => {
     const responsePayload: ApiResponseDto = {
-      drinks: [mockDrink("a drink")],
+      drinks: [drinkDto],
     };
     const response = new MockedResponse({
       ok: true,
@@ -24,7 +31,7 @@ describe("handleSingleDrinkResponse", () => {
 
   it("should return the first expected drink", async () => {
     const responsePayload: ApiResponseDto = {
-      drinks: [mockDrink("a drink"), mockDrink("another drink")],
+      drinks: [drinkDto, anotherDrinkDto],
     };
     const response = new MockedResponse({
       ok: true,

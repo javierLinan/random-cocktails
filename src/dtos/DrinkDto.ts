@@ -10,7 +10,7 @@ export type DrinkDto = {
   strGlass: string;
   strInstructions: string;
   strInstructionsES?: string;
-  strInstructionsDE: string;
+  strInstructionsDE?: string;
   strInstructionsFR?: string;
   strInstructionsIT?: string;
   "strInstructionsZH?-HANS"?: string;

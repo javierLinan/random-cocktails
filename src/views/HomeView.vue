@@ -6,6 +6,7 @@ import GridLayout from "../components/GridLayout.vue";
 import DrinkCard from "../components/DrinkCard.vue";
 import type { Drink } from "../models/Drink";
 import { useRoute } from "vue-router";
+import CardSkeleton from "../components/CardSkeleton.vue";
 
 const route = useRoute();
 
@@ -46,7 +47,15 @@ async function fetchDrinks() {
     <SiteHeader @refresh="fetchDrinks()" />
     <main class="screen static" tabindex="-1">
       <GridLayout>
-        <DrinkCard v-for="drink in drinks" :key="drink.id" :drink="drink" />
+        <template v-if="drinks.length">
+          <DrinkCard v-for="drink in drinks" :key="drink.id" :drink="drink" />
+        </template>
+        <template v-else>
+          <CardSkeleton
+            v-for="index of Array(3).keys()"
+            :key="`home-view-card-skeleton-${index}`"
+          />
+        </template>
       </GridLayout>
     </main>
     <RouterView />

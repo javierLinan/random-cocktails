@@ -9,19 +9,16 @@
   display: grid;
   width: 100%;
   grid-gap: var(--grid-gap, var(--s2));
-  --grid-min: 15rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
 }
 
 .grid-layout > * {
   list-style: none;
 }
 
-@supports (width: min(var(--minimum), 100%)) {
+@media screen and (min-width: 1200px) {
   .grid-layout {
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(min(var(--grid-min), 100%), 1fr)
-    );
+    width: 80%;
   }
 }
 </style>

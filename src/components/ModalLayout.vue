@@ -66,7 +66,7 @@ function escapeHandler(event: KeyboardEvent) {
   inset-block-end: 50%;
   inset-inline-start: 50%;
   transform: translate(-50%, 50%);
-  box-shadow: var(--shadow_300);
+  box-shadow: var(--shadow3);
   color: #000;
   z-index: var(--z-index_modal);
   display: flex;
@@ -79,6 +79,10 @@ function escapeHandler(event: KeyboardEvent) {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.modal-layout__content-title > h1 {
+  inline-size: 100%;
 }
 
 .modal-layout__content-title > button {
